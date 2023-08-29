@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Load Sample Data"
+        android:id="@+id/loadSampleData"/>
+    <item android:title="List of Courses"
+        android:id="@+id/menu_term_list_courses"/>
+    <item android:title="List of Assessments"
+        android:id="@+id/menu_term_list_assessments"/>
+</menu>

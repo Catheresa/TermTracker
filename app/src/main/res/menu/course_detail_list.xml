@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Add Assessment"
+        android:id="@+id/menu_course_add_assessment"/>
+    <item android:title="Update Assessment"
+        android:id="@+id/menu_course_update_assessment"/>
+    <item android:title="Alert"
+        android:id="@+id/menu_course_alert"/>
+    <item android:title="Share Note"
+        android:id="@+id/menu_course_share_note"/>
+</menu>
