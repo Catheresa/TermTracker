@@ -8,12 +8,12 @@
     tools:context=".UI.AssessmentList">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/assessmentCourseList"
+        android:id="@+id/assessment_course_recycler_view"
         android:layout_width="350dp"
-        android:layout_height="150dp"
+        android:layout_height="400dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />

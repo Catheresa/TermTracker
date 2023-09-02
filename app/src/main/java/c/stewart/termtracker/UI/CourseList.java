@@ -1,6 +1,9 @@
 package c.stewart.termtracker.UI;
 
+// Import statements.
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 import c.stewart.termtracker.Database.Repository;
 import c.stewart.termtracker.Entities.Assessment;
@@ -32,18 +37,12 @@ public class CourseList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-////        TODO: Build out term deletion with the floating action button
-//
-//        FloatingActionButton fabUpdate=findViewById(R.id.updateCourseBTN);
-//        fabUpdate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                // TODO: Pull in data from the selected list item
-//                Intent intent=new Intent(CourseList.this, CourseDetails.class);
-//                startActivity(intent);
-//            }
-//        });
+        List<Course> allCourses=repository.getmAllCourses();
+        RecyclerView recyclerView=findViewById(R.id.course_recycler_view);
+        final CourseAdapter courseAdapter=new CourseAdapter(this);
+        recyclerView.setAdapter(courseAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        courseAdapter.setCourses(allCourses);
     }
 
     // Makes menu show up.

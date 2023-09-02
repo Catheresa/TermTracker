@@ -1,5 +1,6 @@
 package c.stewart.termtracker.UI;
 
+// Import statements.
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;

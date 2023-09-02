@@ -1,6 +1,9 @@
 package c.stewart.termtracker.UI;
 
+// Import statements.
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +13,15 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
+import c.stewart.termtracker.Database.Repository;
+import c.stewart.termtracker.Entities.Assessment;
+import c.stewart.termtracker.Entities.Course;
 import c.stewart.termtracker.R;
 
 public class AssessmentList extends AppCompatActivity {
+    private Repository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,17 +37,13 @@ public class AssessmentList extends AppCompatActivity {
             }
         });
 
-////        TODO: Build out term deletion with the floating action button
-//
-//        FloatingActionButton fabUpdate=findViewById(R.id.updateAssessmentBTN);
-//        fabUpdate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                // TODO: Pull in data from the selected list item
-//                Intent intent=new Intent(AssessmentList.this, AssessmentDetails.class);
-//                startActivity(intent);
-//            }
-//        });
+        RecyclerView recyclerView=findViewById(R.id.assessment_course_recycler_view);
+        repository=new Repository(getApplication());
+        List<Assessment> allAssessments=repository.getmAllAssessments();
+        final AssessmentAdapter assessmentAdapter=new AssessmentAdapter(this);
+        recyclerView.setAdapter(assessmentAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        assessmentAdapter.setAssessments(allAssessments);
     }
 
     // Makes menu show up.

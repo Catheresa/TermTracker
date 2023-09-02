@@ -1,16 +1,16 @@
 package c.stewart.termtracker.UI;
 
+// Import statements.
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
+import java.util.List;
 import c.stewart.termtracker.Database.Repository;
 import c.stewart.termtracker.Entities.Assessment;
 import c.stewart.termtracker.Entities.Course;
@@ -19,14 +19,23 @@ import c.stewart.termtracker.R;
 
 public class TermList extends AppCompatActivity {
     private Repository repository;
-    private Button viewListOfCourses;
-    private Button viewListOfAssessments;
+    private TermAdapter termAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
 
+        RecyclerView recyclerView=findViewById(R.id.term_recycler_view);
+        repository= new Repository(getApplication());
+        List<Term> allTerms= repository.getmAllTerms();
+
+        termAdapter= new TermAdapter(this);
+        recyclerView.setAdapter(termAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        termAdapter.setTerms(allTerms);
+
+        // When user clicks on the plus fab, user will be taken to the term details screen.
         FloatingActionButton fabAdd=findViewById(R.id.addTermBTN);
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -35,19 +44,6 @@ public class TermList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-////        TODO: Build out term deletion with the floating action button
-//
-//        FloatingActionButton fabUpdate=findViewById(R.id.updateTermBTN);
-//        fabUpdate.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                // TODO: Pull in data from the selected list item
-//                Intent intent=new Intent(TermList.this, TermDetails.class);
-//                startActivity(intent);
-//            }
-//        });
-
     }
     // Makes menu show up.
     @Override
@@ -55,14 +51,21 @@ public class TermList extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.term_list, menu);
         return true;
     }
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        // Refresh the list of terms
+        List<Term> allTerms= repository.getmAllTerms();
+        termAdapter.setTerms(allTerms);
+    }
 
     // Actions when user clicks on menu items.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId()==R.id.loadSampleData){
             repository= new Repository(getApplication());
-            //Toast.makeText(TermList.this, "put in sample data", Toast.LENGTH_LONG).show();
-
+            // Adding sample data into the database.
             Term term = new Term(0,"Fall 2022","9/1/2022",
                     "12/1/2022");
             repository.insert(term);

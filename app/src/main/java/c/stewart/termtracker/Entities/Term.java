@@ -1,16 +1,20 @@
 package c.stewart.termtracker.Entities;
 
+// Import statements.
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// An instance of a class that will be stored in a database table.
 @Entity(tableName = "Terms")
 public class Term {
+    // Attributes found in the database table.
     @PrimaryKey(autoGenerate = true)
     private int termID;
     private String termName;
     private String termStart;
     private String termEnd;
 
+    // Creates the instances of the term class which takes parameters for the various fields.
     public Term(int termID, String termName, String termStart, String termEnd) {
         this.termID = termID;
         this.termName = termName;
@@ -18,10 +22,10 @@ public class Term {
         this.termEnd = termEnd;
     }
 
+    // Getters and setters used to get and set values of the private fields.
     public int getTermID() {
         return termID;
     }
-
     public void setTermID(int termID) {
         this.termID = termID;
     }
@@ -29,7 +33,6 @@ public class Term {
     public String getTermName() {
         return termName;
     }
-
     public void setTermName(String termName) {
         this.termName = termName;
     }
@@ -37,7 +40,6 @@ public class Term {
     public String getTermStart() {
         return termStart;
     }
-
     public void setTermStart(String termStart) {
         this.termStart = termStart;
     }
@@ -45,7 +47,6 @@ public class Term {
     public String getTermEnd() {
         return termEnd;
     }
-
     public void setTermEnd(String termEnd) {
         this.termEnd = termEnd;
     }

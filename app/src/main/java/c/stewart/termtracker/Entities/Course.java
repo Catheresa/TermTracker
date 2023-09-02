@@ -1,10 +1,13 @@
 package c.stewart.termtracker.Entities;
 
+// Import statements.
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// An instance of a class that will be stored in a database table.
 @Entity(tableName = "Courses")
 public class Course {
+    // Attributes found in the database table.
     @PrimaryKey(autoGenerate = true)
     private int courseID;
     private String courseTitle;
@@ -15,8 +18,11 @@ public class Course {
     private String courseInstructorPhone;
     private String courseInstructorEmail;
     private String courseNotes;
+
+    // Foreign key
     private int termID;
 
+    // Creates the instances of the course class which takes parameters for the various fields.
     public Course(int courseID, String courseTitle, String courseStart, String courseEnd,
                   String courseStatus, String courseInstructor, String courseInstructorPhone,
                   String courseInstructorEmail, String courseNotes, int termID) {
@@ -32,10 +38,10 @@ public class Course {
         this.termID = termID;
     }
 
+    // Getters and setters used to get and set values of the private fields.
     public int getCourseID() {
         return courseID;
     }
-
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
@@ -43,7 +49,6 @@ public class Course {
     public String getCourseTitle() {
         return courseTitle;
     }
-
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }
@@ -51,7 +56,6 @@ public class Course {
     public String getCourseStart() {
         return courseStart;
     }
-
     public void setCourseStart(String courseStart) {
         this.courseStart = courseStart;
     }
@@ -59,7 +63,6 @@ public class Course {
     public String getCourseEnd() {
         return courseEnd;
     }
-
     public void setCourseEnd(String courseEnd) {
         this.courseEnd = courseEnd;
     }
@@ -67,7 +70,6 @@ public class Course {
     public String getCourseStatus() {
         return courseStatus;
     }
-
     public void setCourseStatus(String courseStatus) {
         this.courseStatus = courseStatus;
     }
@@ -75,7 +77,6 @@ public class Course {
     public String getCourseInstructor() {
         return courseInstructor;
     }
-
     public void setCourseInstructor(String courseInstructor) {
         this.courseInstructor = courseInstructor;
     }
@@ -83,7 +84,6 @@ public class Course {
     public String getCourseInstructorPhone() {
         return courseInstructorPhone;
     }
-
     public void setCourseInstructorPhone(String courseInstructorPhone) {
         this.courseInstructorPhone = courseInstructorPhone;
     }
@@ -91,7 +91,6 @@ public class Course {
     public String getCourseInstructorEmail() {
         return courseInstructorEmail;
     }
-
     public void setCourseInstructorEmail(String courseInstructorEmail) {
         this.courseInstructorEmail = courseInstructorEmail;
     }
@@ -99,7 +98,6 @@ public class Course {
     public String getCourseNotes() {
         return courseNotes;
     }
-
     public void setCourseNotes(String courseNotes) {
         this.courseNotes = courseNotes;
     }
@@ -107,7 +105,6 @@ public class Course {
     public int getTermID() {
         return termID;
     }
-
     public void setTermID(int termID) {
         this.termID = termID;
     }
