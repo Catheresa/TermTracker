@@ -28,9 +28,12 @@ public interface CourseDAO {
     void delete(Course course);
 
     // Queries allows user to extract data from the database.
-    @Query("SELECT * FROM Courses ORDER BY courseID ASC")
+    @Query("SELECT * FROM Courses ORDER BY termID ASC")
     List<Course > getAllCourses();
 
-    @Query("SELECT * FROM Courses WHERE termID=:termID ORDER BY courseID ASC")
+    @Query("SELECT * FROM Courses WHERE termID=:termID ORDER BY termID ASC")
     List<Course> getAssociatedCourses(int termID);
+
+    @Query(("SELECT * FROM Courses WHERE courseID=:courseID"))
+    Course getCourseByID(int courseID);
 }

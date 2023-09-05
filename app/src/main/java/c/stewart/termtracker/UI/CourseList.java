@@ -23,12 +23,23 @@ import c.stewart.termtracker.R;
 
 public class CourseList extends AppCompatActivity {
     private Repository repository;
+    private CourseAdapter courseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course);
 
+        RecyclerView recyclerView=findViewById(R.id.course_recycler_view);
+        repository = new Repository(getApplication());
+        List<Course> allCourses=repository.getmAllCourses();
+
+        courseAdapter = new CourseAdapter(this);
+        recyclerView.setAdapter(courseAdapter);
+        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        courseAdapter.setCourses(allCourses);
+
+        // When user clicks on the plus fab, user will be taken to the course details screen.
         FloatingActionButton fabAdd=findViewById(R.id.addCourseBTN);
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -37,12 +48,6 @@ public class CourseList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        List<Course> allCourses=repository.getmAllCourses();
-        RecyclerView recyclerView=findViewById(R.id.course_recycler_view);
-        final CourseAdapter courseAdapter=new CourseAdapter(this);
-        recyclerView.setAdapter(courseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        courseAdapter.setCourses(allCourses);
     }
 
     // Makes menu show up.
@@ -50,6 +55,14 @@ public class CourseList extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.course_list, menu);
         return true;
+    }
+
+    // Refresh the list of courses after any changes to the database.
+    @Override
+    protected  void onResume(){
+        super.onResume();
+        List<Course> allCourses = repository.getmAllCourses();
+        courseAdapter.setCourses(allCourses);
     }
     // Actions when user clicks on menu items.
     @Override

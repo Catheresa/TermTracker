@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button termScreen;
     private Button courseScreen;
     private Button assessmentScreen;
-
+    public static int numAlert;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

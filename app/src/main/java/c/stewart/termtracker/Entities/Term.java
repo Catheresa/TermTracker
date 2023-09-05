@@ -4,6 +4,8 @@ package c.stewart.termtracker.Entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 // An instance of a class that will be stored in a database table.
 @Entity(tableName = "Terms")
 public class Term {
@@ -11,21 +13,22 @@ public class Term {
     @PrimaryKey(autoGenerate = true)
     private int termID;
     private String termName;
-    private String termStart;
-    private String termEnd;
+    private Date termStart;
+    private Date termEnd;
 
     // Creates the instances of the term class which takes parameters for the various fields.
-    public Term(int termID, String termName, String termStart, String termEnd) {
+
+    public Term(int termID, String termName, Date termStart, Date termEnd) {
         this.termID = termID;
         this.termName = termName;
         this.termStart = termStart;
         this.termEnd = termEnd;
     }
 
-    // Getters and setters used to get and set values of the private fields.
     public int getTermID() {
         return termID;
     }
+
     public void setTermID(int termID) {
         this.termID = termID;
     }
@@ -33,21 +36,28 @@ public class Term {
     public String getTermName() {
         return termName;
     }
+
     public void setTermName(String termName) {
         this.termName = termName;
     }
 
-    public String getTermStart() {
+    public Date getTermStart() {
         return termStart;
     }
-    public void setTermStart(String termStart) {
+
+    public void setTermStart(Date termStart) {
         this.termStart = termStart;
     }
 
-    public String getTermEnd() {
+    public Date getTermEnd() {
         return termEnd;
     }
-    public void setTermEnd(String termEnd) {
+
+    public void setTermEnd(Date termEnd) {
         this.termEnd = termEnd;
+    }
+    @Override
+    public String toString(){
+        return String.valueOf(termID);
     }
 }

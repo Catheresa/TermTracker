@@ -26,7 +26,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
         public AssessmentViewHolder(@NonNull View itemView) {
             super(itemView);
             assessmentItemView=itemView.findViewById(R.id.assessment_list_item);
-            assessmentItemView2=itemView.findViewById(R.id.assessment_course_list_item);
+            assessmentItemView2=itemView.findViewById(R.id.assessment_list_item_course);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -62,8 +62,8 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.As
             Assessment current=mAssessments.get(position);
             String assessmentName=current.getAssessmentName();
             int courseID= current.getCourseID();
-            holder.assessmentItemView.setText(assessmentName);
-            holder.assessmentItemView2.setText("Course ID: " + Integer.toString(courseID));
+            holder.assessmentItemView.setText(assessmentName + ": ");
+            holder.assessmentItemView2.setText("Course ID " + Integer.toString(courseID));
         }else{
             holder.assessmentItemView.setText("No assessment name");
             holder.assessmentItemView2.setText("No course id");

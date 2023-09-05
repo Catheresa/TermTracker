@@ -8,6 +8,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:textColor="@color/navyBlue"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TermTracker"
@@ -15,36 +16,43 @@
         <activity
             android:name=".UI.TermDetails"
             android:label="Term Details"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.TermList"
             android:exported="false" />
         <activity
             android:name=".UI.CourseDetails"
             android:label="Course Details"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.TermDetails"
             android:exported="false" />
         <activity
             android:name=".UI.AssessmentDetails"
             android:label="Assessment Details"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.CourseDetails"
             android:exported="false" />
         <activity
             android:name=".UI.AssessmentList"
             android:label="List of Assessments"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.MainActivity"
             android:exported="false" />
         <activity
             android:name=".UI.CourseList"
             android:label="List of Courses"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.MainActivity"
             android:exported="false" />
         <activity
             android:name=".UI.TermList"
             android:label="List of Terms"
+            android:textColor="@color/navyBlue"
             android:parentActivityName=".UI.MainActivity"
             android:exported="false" />
         <activity
             android:name=".UI.MainActivity"
             android:label="Main Menu"
+            android:textColor="@color/navyBlue"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

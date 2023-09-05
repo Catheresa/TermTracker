@@ -29,4 +29,6 @@ public interface TermDAO {
     @Query("SELECT * FROM Terms ORDER BY termID ASC")
     List<Term> getAllTerms();
 
+    @Query(("SELECT * FROM Terms WHERE termID=:termID"))
+    Term getTermByID(int termID);
 }

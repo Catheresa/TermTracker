@@ -78,16 +78,17 @@
                     android:id="@+id/termTitle"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="5dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Term_Name"
                     />
                 <EditText
                     android:id="@+id/termTitleInput"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginStart="25dp"
                     android:backgroundTint="@color/white"
                     android:ems="10"
@@ -105,6 +106,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Start_Date"
                     />
                 <EditText
@@ -129,6 +131,7 @@
                 android:layout_height="50dp"
                 android:padding="10dp"
                 android:textColor="@color/babyBlue"
+                android:textSize="14sp"
                 android:text="@string/End_Date"
                 />
 

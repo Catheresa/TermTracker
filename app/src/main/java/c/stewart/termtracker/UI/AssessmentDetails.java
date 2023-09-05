@@ -2,6 +2,8 @@ package c.stewart.termtracker.UI;
 
 // Import statements.
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +41,13 @@ public class AssessmentDetails extends AppCompatActivity {
             return true;
         }
         if(item.getItemId()==R.id.menu_assessment_share_note){
-            // TODO: Add code to share note
+            Intent sentIntent= new Intent();
+            sentIntent.setAction(Intent.ACTION_SEND);
+//            sentIntent.putExtra(Intent.EXTRA_TEXT, editAssessmentNotes.getText().toString()+ "SHARE_SUCCESS");
+//            sentIntent.putExtra(Intent.EXTRA_TITLE, editAssessmentNotes.getText().toString()+ "SHARE_SUCCESS");
+            sentIntent.setType("text/plain");
+            Intent shareIntent=Intent.createChooser(sentIntent,null);
+            startActivity(shareIntent);
             return true;
         }
         if(item.getItemId()==android.R.id.home){

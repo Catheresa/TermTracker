@@ -9,22 +9,24 @@
     <string name="End_Date">End: </string>
     <string name="Assessment_Type">Type:</string>
     <string name="Assessment_Type_HelpText">Enter Type</string>
+    <string name="Assessment_Screen">Assessment Screen</string>
+    <string name="Assessment">Assessment</string>
+    <string name="Assessment_Name">Assessment: </string>
     <string name="Notes">Notes: </string>
     <string name="NotesHelpText">Enter Notes</string>
     <string name="Instructor_Phone">Phone: </string>
     <string name="Instructor_Email">Email: </string>
-    <string name="InstructorHelpText">Enter Instructor Information</string>
+    <string name="InstructorHelpText">Enter Instructor Info</string>
     <string name="Save">Save</string>
     <string name="Cancel">Cancel</string>
     <string name="Term_Screen">Term Screen</string>
     <string name="Course_Screen">Course Screen</string>
-    <string name="Assessment_Screen">Assessment Screen</string>
     <string name="Add">Add</string>
     <string name="Delete">Delete</string>
     <string name="Update">Update</string>
     <string name="Term">Term</string>
     <string name="Course">Course</string>
-    <string name="Assessment">Assessment</string>
+
     <string name="NameHelpText">Enter Name</string>
     <string name="DateHelpText">Enter Date</string>
     <string name="View">View</string>

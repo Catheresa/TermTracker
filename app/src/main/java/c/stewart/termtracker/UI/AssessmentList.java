@@ -22,12 +22,23 @@ import c.stewart.termtracker.R;
 
 public class AssessmentList extends AppCompatActivity {
     private Repository repository;
+    private AssessmentAdapter assessmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment);
 
+        RecyclerView recyclerView=findViewById(R.id.assessment_course_recycler_view);
+        repository= new Repository(getApplication());
+        List<Assessment> allAssessments= repository.getmAllAssessments();
+
+        assessmentAdapter= new AssessmentAdapter(this);
+        recyclerView.setAdapter(assessmentAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        assessmentAdapter.setAssessments(allAssessments);
+
+        // When user clicks on the plus fab, user will be taken to the assessment details screen.
         FloatingActionButton fabAdd=findViewById(R.id.addAssessmentBTN);
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -36,14 +47,6 @@ public class AssessmentList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        RecyclerView recyclerView=findViewById(R.id.assessment_course_recycler_view);
-        repository=new Repository(getApplication());
-        List<Assessment> allAssessments=repository.getmAllAssessments();
-        final AssessmentAdapter assessmentAdapter=new AssessmentAdapter(this);
-        recyclerView.setAdapter(assessmentAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        assessmentAdapter.setAssessments(allAssessments);
     }
 
     // Makes menu show up.
@@ -52,6 +55,14 @@ public class AssessmentList extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.assessment_list, menu);
         return true;
     }
+    // Refresh the list of assessments after any changes to the database.
+    @Override
+    protected void onResume(){
+        super.onResume();
+        List<Assessment> allAssessments= repository.getmAllAssessments();
+        assessmentAdapter.setAssessments(allAssessments);
+    }
+
     // Actions when user clicks on menu items.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){

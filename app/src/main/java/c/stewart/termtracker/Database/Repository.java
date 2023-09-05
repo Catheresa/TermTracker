@@ -22,7 +22,11 @@ public class Repository {
     // Three lists:
     private List<Term> mAllTerms;
     private List<Course> mAllCourses;
+
+    private List<Course> mCourse;
     private List<Assessment> mAllAssessments;
+
+
 
     // Threads help with responsiveness and is essential to handle potential exceptions & errors.
     private static int NUMBER_OF_THREADS=4;
@@ -53,7 +57,10 @@ public class Repository {
         }
         return mAllTerms;
     }
-
+    // Fetch a term by termID
+    public Term getTermByID(int termID){
+        return mTermDAO.getTermByID(termID);
+    }
     // Term CRUD methods:
     public void insert(Term term){
         databaseExecutor.execute(()->{
@@ -113,6 +120,10 @@ public class Repository {
             e.printStackTrace();
         }
         return mAllCourses;
+    }
+    // Fetch a course by courseID
+    public Course getCourseByID(int courseID){
+        return mCourseDAO.getCourseByID(courseID);
     }
 
     // Course CRUD methods:

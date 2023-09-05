@@ -4,6 +4,8 @@ package c.stewart.termtracker.Entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 // An instance of a class that will be stored in a database table.
 @Entity(tableName = "Courses")
 public class Course {
@@ -11,8 +13,8 @@ public class Course {
     @PrimaryKey(autoGenerate = true)
     private int courseID;
     private String courseTitle;
-    private String courseStart;
-    private String courseEnd;
+    private Date courseStart;
+    private Date courseEnd;
     private String courseStatus;
     private String courseInstructor;
     private String courseInstructorPhone;
@@ -23,7 +25,8 @@ public class Course {
     private int termID;
 
     // Creates the instances of the course class which takes parameters for the various fields.
-    public Course(int courseID, String courseTitle, String courseStart, String courseEnd,
+
+    public Course(int courseID, String courseTitle, Date courseStart, Date courseEnd,
                   String courseStatus, String courseInstructor, String courseInstructorPhone,
                   String courseInstructorEmail, String courseNotes, int termID) {
         this.courseID = courseID;
@@ -38,10 +41,10 @@ public class Course {
         this.termID = termID;
     }
 
-    // Getters and setters used to get and set values of the private fields.
     public int getCourseID() {
         return courseID;
     }
+
     public void setCourseID(int courseID) {
         this.courseID = courseID;
     }
@@ -49,27 +52,31 @@ public class Course {
     public String getCourseTitle() {
         return courseTitle;
     }
+
     public void setCourseTitle(String courseTitle) {
         this.courseTitle = courseTitle;
     }
 
-    public String getCourseStart() {
+    public Date getCourseStart() {
         return courseStart;
     }
-    public void setCourseStart(String courseStart) {
+
+    public void setCourseStart(Date courseStart) {
         this.courseStart = courseStart;
     }
 
-    public String getCourseEnd() {
+    public Date getCourseEnd() {
         return courseEnd;
     }
-    public void setCourseEnd(String courseEnd) {
+
+    public void setCourseEnd(Date courseEnd) {
         this.courseEnd = courseEnd;
     }
 
     public String getCourseStatus() {
         return courseStatus;
     }
+
     public void setCourseStatus(String courseStatus) {
         this.courseStatus = courseStatus;
     }
@@ -77,6 +84,7 @@ public class Course {
     public String getCourseInstructor() {
         return courseInstructor;
     }
+
     public void setCourseInstructor(String courseInstructor) {
         this.courseInstructor = courseInstructor;
     }
@@ -84,6 +92,7 @@ public class Course {
     public String getCourseInstructorPhone() {
         return courseInstructorPhone;
     }
+
     public void setCourseInstructorPhone(String courseInstructorPhone) {
         this.courseInstructorPhone = courseInstructorPhone;
     }
@@ -91,6 +100,7 @@ public class Course {
     public String getCourseInstructorEmail() {
         return courseInstructorEmail;
     }
+
     public void setCourseInstructorEmail(String courseInstructorEmail) {
         this.courseInstructorEmail = courseInstructorEmail;
     }
@@ -98,6 +108,7 @@ public class Course {
     public String getCourseNotes() {
         return courseNotes;
     }
+
     public void setCourseNotes(String courseNotes) {
         this.courseNotes = courseNotes;
     }
@@ -105,6 +116,7 @@ public class Course {
     public int getTermID() {
         return termID;
     }
+
     public void setTermID(int termID) {
         this.termID = termID;
     }

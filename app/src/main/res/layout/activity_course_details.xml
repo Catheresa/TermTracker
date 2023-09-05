@@ -10,19 +10,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/course_assessment_recycler_view"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="100dp"
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/course_term_recycler_view"
-        android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="25dp"
-        app:layout_constraintTop_toBottomOf="@+id/course_assessment_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         />
@@ -67,7 +57,7 @@
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/course_term_recycler_view"
+        app:layout_constraintTop_toBottomOf="@+id/course_assessment_recycler_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,19 +76,20 @@
                     android:layout_height="50dp"
                     android:layout_marginTop="25dp"
                     android:padding="10dp"
+                    android:textSize="14sp"
                     android:textColor="@color/babyBlue"
                     android:text="@string/Term_Name"/>
 
-                <EditText
-                    android:id="@+id/courseTermTitleInput"
+                <Spinner
+                    android:id="@+id/termSpinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="25dp"
                     android:backgroundTint="@color/white"
-                    android:ems="10"
-                    android:hint="@string/NameHelpText"
-                    android:inputType="text"/>
+                    app:layout_constraintStart_toEndOf="@+id/courseTermTitleInput"
+                    app:layout_constraintTop_toTopOf="@+id/courseTermTitleInput" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -111,6 +102,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Course_Name"
                     />
 
@@ -137,6 +129,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Start_Date"
                     />
 
@@ -162,6 +155,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/End_Date"
                     />
 
@@ -187,6 +181,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Status"
                     />
                 <EditText
@@ -211,6 +206,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Instructor_Name"
                     />
                 <EditText
@@ -233,15 +229,17 @@
                     android:id="@+id/instructorPhone"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Instructor_Phone"
                     />
                 <EditText
                     android:id="@+id/instructorPhoneInput"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="10dp"
                     android:backgroundTint="@color/white"
                     android:ems="10"
                     android:hint="@string/InstructorHelpText"
@@ -257,15 +255,17 @@
                     android:id="@+id/instructorEmail"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
+                    android:layout_marginStart="15dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Instructor_Email"
                     />
                 <EditText
                     android:id="@+id/instructorEmailInput"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="10dp"
                     android:backgroundTint="@color/white"
                     android:ems="10"
                     android:hint="@string/InstructorHelpText"
@@ -283,6 +283,7 @@
                     android:layout_height="50dp"
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
+                    android:textSize="14sp"
                     android:text="@string/Notes"
                     />
 
