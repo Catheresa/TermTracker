@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -44,8 +45,19 @@ public class CourseList extends AppCompatActivity {
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent=new Intent(CourseList.this, CourseDetails.class);
-                startActivity(intent);
+                List<Term> allTerms = repository.getmAllTerms();
+                if(allTerms.isEmpty()){
+                    // Display a message indicating that a term must be added first.
+                    Toast.makeText(CourseList.this, "A term must be added before a " +
+                            "course can be added.", Toast.LENGTH_SHORT).show();
+                    // Navigate back to the term list screen.
+                    Intent intent = new Intent(CourseList.this, TermList.class);
+                    startActivity(intent);
+                }else{
+                    // If there are terms, navigate to the course details screen.
+                    Intent intent=new Intent(CourseList.this, CourseDetails.class);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -67,6 +79,11 @@ public class CourseList extends AppCompatActivity {
     // Actions when user clicks on menu items.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.main_menu_course_screen){
+            Intent intent = new Intent (CourseList.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         if(item.getItemId()==R.id.menu_course_list_terms){
             Intent intent = new Intent (CourseList.this, TermList.class);
             startActivity(intent);
@@ -83,6 +100,4 @@ public class CourseList extends AppCompatActivity {
         }
         return true;
     }
-
-
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Main Menu"
+        android:id="@+id/menu_assessment_detail_main"/>
+    <item android:title="List of Assessments"
+        android:id="@+id/menu_assessment_detail_assessment"/>
     <item android:title="Alert"
         android:id="@+id/menu_assessment_alert"/>
-    <item android:title="Share Note"
-        android:id="@+id/menu_assessment_share_note"/>
 </menu>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Main Menu"
+        android:id="@+id/main_menu_assessment_screen"/>
     <item android:title="List of Terms"
         android:id="@+id/menu_assessment_list_terms"/>
     <item android:title="List of Courses"

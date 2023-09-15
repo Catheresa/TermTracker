@@ -7,13 +7,12 @@
     android:background="@color/blueGrotto"
     tools:context=".UI.AssessmentDetails">
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAssessmentDetailsBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:srcCompat="@drawable/baseline_library_add_24"
+        app:srcCompat="@drawable/baseline_save_24"
         android:contentDescription="@string/Add"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="25dp"
@@ -39,7 +38,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/Update"
-        app:srcCompat="@drawable/baseline_refresh_24"
+        app:srcCompat="@drawable/baseline_save_24"
         android:layout_marginStart="90dp"
         android:layout_marginBottom="25dp"
         app:layout_constraintLeft_toRightOf="@+id/deleteAssessmentDetailsBTN"
@@ -63,51 +62,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/assessmentCourseTermName"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
-                    android:padding="10dp"
-                    android:textColor="@color/babyBlue"
-                    android:textSize="14sp"
-                    android:text="@string/Term_Name"
-                    />
 
-                <EditText
-                    android:id="@+id/assessmentCourseTermNameInput"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginStart="25dp"
-                    android:backgroundTint="@color/white"
-                    android:ems="10"
-                    android:hint="@string/NameHelpText"
-                    android:inputType="text"
-                    />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/assessmentCourseTitle"
                     android:layout_width="100dp"
                     android:layout_height="50dp"
                     android:padding="10dp"
-                    android:textColor="@color/babyBlue"
-                    android:textSize="14sp"
                     android:text="@string/Course_Name"
-                    />
-
-                <EditText
-                    android:id="@+id/assessmentCourseTitleInput"
+                    android:textColor="@color/babyBlue"
+                    android:textSize="14sp" />
+                <Spinner
+                    android:id="@+id/assessmentCourseSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginStart="25dp"
                     android:backgroundTint="@color/white"
                     android:ems="10"
-                    android:hint="@string/NameHelpText"
                     android:inputType="text"
                     />
             </LinearLayout>
@@ -116,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <TextView
-                    android:id="@+id/assessmentTitle"
+                    android:id="@+id/assessmentName"
                     android:layout_width="105dp"
                     android:layout_height="50dp"
                     android:padding="10dp"
@@ -126,7 +96,7 @@
                     />
 
                 <EditText
-                    android:id="@+id/assessmentTitleInput"
+                    android:id="@+id/assessmentNameInput"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
@@ -148,18 +118,17 @@
                     android:padding="10dp"
                     android:textColor="@color/babyBlue"
                     android:textSize="14sp"
-                    android:text="@string/Start_Date"
+                    android:text="@string/Assessment_Type"
                     />
 
-                <EditText
-                    android:id="@+id/assessmentTypeInput"
+                <Spinner
+                    android:id="@+id/assessmentTypeSpinner"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_marginStart="25dp"
                     android:backgroundTint="@color/white"
                     android:ems="10"
-                    android:hint="@string/DateHelpText"
-                    android:inputType="date"
+                    android:inputType="text"
                     />
 
             </LinearLayout>
@@ -216,31 +185,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/assessmentStatus"
-                    android:layout_width="100dp"
-                    android:layout_height="50dp"
-                    android:padding="10dp"
-                    android:textColor="@color/babyBlue"
-                    android:textSize="14sp"
-                    android:text="@string/Status"
-                    />
-
-                <EditText
-                    android:id="@+id/assessmentStatusInput"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="25dp"
-                    android:backgroundTint="@color/white"
-                    android:ems="10"
-                    android:hint="@string/Status"
-                    android:inputType="text"
-                    />
-            </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

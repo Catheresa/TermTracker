@@ -15,11 +15,8 @@ import c.stewart.termtracker.R;
 // This adapter will be used in conjunction with a RecyclerView to display a filtered list of courses.
 public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.TermDetailsViewHolder> {
     // Member variables.
-    // A private field that holds a list of 'Course' objects that will be displayed.
     private List<Course> mCourses;
-    // This private field holds a reference to the Android app's context.
     private final Context context;
-    // This private field is used for inflating the layout for each item in the RecyclerView.
     private final LayoutInflater mInflater;
 
     // Constructor for the adapter class.

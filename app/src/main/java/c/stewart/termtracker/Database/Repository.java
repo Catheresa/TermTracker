@@ -11,6 +11,7 @@ import c.stewart.termtracker.DAO.TermDAO;
 import c.stewart.termtracker.Entities.Assessment;
 import c.stewart.termtracker.Entities.Course;
 import c.stewart.termtracker.Entities.Term;
+import java.util.concurrent.atomic.AtomicReference;
 
 // Class responsible for handling interactions with the database entities.
 public class Repository {
@@ -25,6 +26,8 @@ public class Repository {
 
     private List<Course> mCourse;
     private List<Assessment> mAllAssessments;
+
+    private Term thisTerm;
 
 
 
@@ -57,10 +60,54 @@ public class Repository {
         }
         return mAllTerms;
     }
-    // Fetch a term by termID
-    public Term getTermByID(int termID){
-        return mTermDAO.getTermByID(termID);
+    // My original 9/6/2023
+//     Fetch a term by termID
+//    public Term getTermByID(int termID){
+//        return mTermDAO.getTermByID(termID);
+//    }
+    // Bill's code
+//    public Term getTermByID(int termID){
+//        Term thisTerm = null;
+//        databaseExecutor.execute(()->{
+//            thisTerm = mTermDAO.getTermByID(termID);
+//        });
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return thisTerm;
+//    }
+    // I got Bill's code to work with an atom reference but Bill said to delete
+//    public Term getTermByID(int termID) {
+//        AtomicReference<Term> termReference = new AtomicReference<>();
+//
+//        databaseExecutor.execute(() -> {
+//            Term term = mTermDAO.getTermByID(termID);
+//            termReference.set(term);
+//        });
+//
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        return termReference.get();
+    // Bill's second set of code.
+    public Term getTermByID(int termID) {
+        databaseExecutor.execute(()->{
+            thisTerm = mTermDAO.getTermByID(termID);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return thisTerm;
     }
+
+
     // Term CRUD methods:
     public void insert(Term term){
         databaseExecutor.execute(()->{

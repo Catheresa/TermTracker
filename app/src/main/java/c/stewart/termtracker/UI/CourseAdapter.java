@@ -74,7 +74,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
             String courseTitle=current.getCourseTitle();
             int termID= current.getTermID();
             holder.courseItemView.setText(courseTitle + ": ");
-            holder.courseItemView2.setText("Term ID - " + Integer.toString(termID));
+            holder.courseItemView2.setText("Term ID " + Integer.toString(termID));
         }else{
             holder.courseItemView.setText("No course name");
             holder.courseItemView2.setText("No term id");

@@ -13,8 +13,8 @@ public class Course {
     @PrimaryKey(autoGenerate = true)
     private int courseID;
     private String courseTitle;
-    private Date courseStart;
-    private Date courseEnd;
+    private String courseStart;
+    private String courseEnd;
     private String courseStatus;
     private String courseInstructor;
     private String courseInstructorPhone;
@@ -26,9 +26,11 @@ public class Course {
 
     // Creates the instances of the course class which takes parameters for the various fields.
 
-    public Course(int courseID, String courseTitle, Date courseStart, Date courseEnd,
-                  String courseStatus, String courseInstructor, String courseInstructorPhone,
-                  String courseInstructorEmail, String courseNotes, int termID) {
+
+    public Course(int courseID, String courseTitle, String courseStart,
+                  String courseEnd, String courseStatus, String courseInstructor,
+                  String courseInstructorPhone, String courseInstructorEmail,
+                  String courseNotes, int termID) {
         this.courseID = courseID;
         this.courseTitle = courseTitle;
         this.courseStart = courseStart;
@@ -57,19 +59,19 @@ public class Course {
         this.courseTitle = courseTitle;
     }
 
-    public Date getCourseStart() {
+    public String getCourseStart() {
         return courseStart;
     }
 
-    public void setCourseStart(Date courseStart) {
+    public void setCourseStart(String courseStart) {
         this.courseStart = courseStart;
     }
 
-    public Date getCourseEnd() {
+    public String getCourseEnd() {
         return courseEnd;
     }
 
-    public void setCourseEnd(Date courseEnd) {
+    public void setCourseEnd(String courseEnd) {
         this.courseEnd = courseEnd;
     }
 
@@ -119,5 +121,10 @@ public class Course {
 
     public void setTermID(int termID) {
         this.termID = termID;
+    }
+
+    @Override
+    public String toString(){
+        return String.valueOf(courseID);
     }
 }

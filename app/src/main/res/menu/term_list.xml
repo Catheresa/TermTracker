@@ -2,6 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="Main Menu"
+        android:id="@+id/main_menu_term_screen"/>
     <item android:title="Load Sample Data"
         android:id="@+id/loadSampleData"/>
     <item android:title="List of Courses"

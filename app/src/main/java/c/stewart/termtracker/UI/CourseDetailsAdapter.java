@@ -52,12 +52,10 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
                     final Assessment current= mAssessments.get(position);
                     Intent intent = new Intent(context, CourseDetails.class);
                     intent.putExtra("assessmentID", current.getAssessmentID());
-                    intent.putExtra("termName", current.getTermName());
                     intent.putExtra("assessmentName", current.getAssessmentName());
                     intent.putExtra("assessmentType", current.getAssessmentType());
                     intent.putExtra("assessmentStart", current.getAssessmentStart());
                     intent.putExtra("assessmentEnd", current.getAssessmentEnd());
-                    intent.putExtra("assessmentStatus", current.getAssessmentStatus());
                     intent.putExtra("assessmentNotes", current.getAssessmentNotes());
                     intent.putExtra("courseID", current.getCourseID());
                     context.startActivity(intent);
@@ -65,7 +63,6 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
             });
         }
     }
-
     // Creates instances of a ViewHolder, including setting up widgets.
     @NonNull
     @Override
@@ -73,7 +70,6 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
         View itemView=mInflater.inflate(R.layout.course_details_list_item,parent,false);
         return new CourseDetailsAdapter.CourseDetailsViewHolder((itemView));
     }
-
     // This method used to bind data to a ViewHolder setting the data for each item based on the
     // position in the list. Fetches the appropriate data to display on the RecyclerView.
     @Override
@@ -89,7 +85,6 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
             holder.courseDetailsItemView2.setText("No courseID");
         }
     }
-
     // Method used to obtain the size of the dataset.
     @Override
     public int getItemCount() {
@@ -97,7 +92,6 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
             return mAssessments.size();
         }else return 0;
     }
-
     public void setCourses(List<Assessment> assessments){
         mAssessments= assessments;
         notifyDataSetChanged();

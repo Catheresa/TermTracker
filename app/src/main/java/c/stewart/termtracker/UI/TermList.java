@@ -9,7 +9,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.List;
 import c.stewart.termtracker.Database.Repository;
 import c.stewart.termtracker.Entities.Assessment;
@@ -29,24 +34,24 @@ public class TermList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term);
 
-        // Initialization of the view based on id.
+        // Sets up the views.
+        FloatingActionButton fabAdd=findViewById(R.id.addTermBTN);
+
+        // Initialization of the view based on id, data retrieval and management, & fetching a lis of 'Term' objects.
         RecyclerView recyclerView=findViewById(R.id.term_recycler_view);
-        // Data retrieval and management.
         repository= new Repository(getApplication());
-        // Fetches a list of 'Term' objects.
         List<Term> allTerms= repository.getmAllTerms();
 
         // Creates a new instance of a 'TermAdapter' used to populate the RecyclerView.
-        termAdapter= new TermAdapter(this);
         // Connects the data source (the adapter) to the 'RecyclerView' so it knows how to display data.
-        recyclerView.setAdapter(termAdapter);
         // Arranges the list view vertically.
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         // Passes the 'Term' objects to the 'TermAdapter' so data can be displayed in the 'RecyclerView'
+        termAdapter= new TermAdapter(this);
+        recyclerView.setAdapter(termAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         termAdapter.setTerms(allTerms);
 
         // When user clicks on the plus fab, user will be taken to the term details screen.
-        FloatingActionButton fabAdd=findViewById(R.id.addTermBTN);
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -54,12 +59,6 @@ public class TermList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-    // Makes menu show up.
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        getMenuInflater().inflate(R.menu.term_list, menu);
-        return true;
     }
 
     // Refreshes the list of terms with any changes to the database.
@@ -72,20 +71,32 @@ public class TermList extends AppCompatActivity {
         termAdapter.setTerms(allTerms);
     }
 
+    // Makes menu show up.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.term_list, menu);
+        return true;
+    }
+
     // Actions when user clicks on menu items.
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         // The initial set of data that is loaded to the database on click.
+        if(item.getItemId()==R.id.main_menu_term_screen){
+            Intent intent = new Intent (TermList.this, MainActivity.class);
+            startActivity(intent);
+            return true;
+        }
         if(item.getItemId()==R.id.loadSampleData){
             repository= new Repository(getApplication());
 
-            Date startDate1 = new Date(122, 8, 1); // Year 122 is 2022, Month 8 is September (0-based), Day 1
-            Date endDate1 = new Date(122, 11, 1);
+            String startDate1 = "09/01/22";
+            String endDate1 = "12/01/22";
+            String startDate2 = "01/03/23";
+            String endDate2 = "04/03/23";
             Term term1 = new Term(0, "Fall 2022", startDate1, endDate1);
             repository.insert(term1);
 
-            Date startDate2 = new Date(123, 0, 3); // Year 123 is 2023, Month 0 is January, Day 3
-            Date endDate2 = new Date(123, 3, 3);
             Term term2 = new Term(0, "Winter 2023", startDate2, endDate2);
             repository.insert(term2);
 
@@ -110,16 +121,13 @@ public class TermList extends AppCompatActivity {
                     2);
             repository.insert(course);
 
-            Assessment assessment = new Assessment(0, "Fall 2022",
-                    "ITIL Exam","Objective Assessment",
-                    startDate1, endDate2,"Completed",
+            Assessment assessment = new Assessment(0, "ITIL Exam",
+                    "Objective Assessment", startDate1, endDate2,
                     "85% passing grade",1);
             repository.insert(assessment);
 
-            assessment = new Assessment(0, "Winter 2023",
-                    "CompTIA-A+ Exam","Objective Assessment",
-                    startDate2, endDate2,"Completed",
-                    "87% passing grade",2);
+            assessment = new Assessment(0, "CompTIA-A+ Exam","Objective Assessment",
+                    startDate2, endDate2, "87% passing grade",2);
             repository.insert(assessment);
 
             return true;

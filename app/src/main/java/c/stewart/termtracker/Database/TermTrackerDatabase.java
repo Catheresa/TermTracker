@@ -15,7 +15,7 @@ import c.stewart.termtracker.Entities.Course;
 import c.stewart.termtracker.Entities.Term;
 
 // Code represents the Room Database
-@Database(entities = {Assessment.class, Course.class, Term.class}, version = 4, exportSchema = false)
+@Database(entities = {Assessment.class, Course.class, Term.class}, version = 7, exportSchema = false)
 @TypeConverters(DateConverter.class)
 public abstract class TermTrackerDatabase extends RoomDatabase {
     // Three abstract methods declared to access its corresponding DAO for that entity.
