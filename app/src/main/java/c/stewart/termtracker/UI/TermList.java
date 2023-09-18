@@ -94,11 +94,16 @@ public class TermList extends AppCompatActivity {
             String endDate1 = "12/01/22";
             String startDate2 = "01/03/23";
             String endDate2 = "04/03/23";
+            String startDate3 = "04/15/23";
+            String endDate3 = "07/15/23";
             Term term1 = new Term(0, "Fall 2022", startDate1, endDate1);
             repository.insert(term1);
 
             Term term2 = new Term(0, "Winter 2023", startDate2, endDate2);
             repository.insert(term2);
+
+            Term term3 = new Term(0, "Spring 2023", startDate3, endDate3);
+            repository.insert(term3);
 
             Course course = new Course(0, "Advanced Java Concepts",
                     startDate1, endDate1, "Completed",
@@ -121,13 +126,28 @@ public class TermList extends AppCompatActivity {
                     2);
             repository.insert(course);
 
+            course = new Course(0, "Software Development Capstone",
+                    startDate2,endDate2, "Completed",
+                    "Tyler Turner", "(599)234-8744",
+                    "tyler.turner@wgu.edu", "Explores PC components",
+                    3);
+            repository.insert(course);
+
             Assessment assessment = new Assessment(0, "ITIL Exam",
                     "Objective Assessment", startDate1, endDate2,
-                    "85% passing grade",1);
+                    1);
             repository.insert(assessment);
 
-            assessment = new Assessment(0, "CompTIA-A+ Exam","Objective Assessment",
-                    startDate2, endDate2, "87% passing grade",2);
+            assessment = new Assessment(0, "CompTIA-A+ Exam - Part 1","Objective Assessment",
+                    startDate2, endDate2, 2);
+            repository.insert(assessment);
+
+            assessment = new Assessment(0, "CompTIA-A+ Exam - Part 2","Objective Assessment",
+                    startDate2, endDate2, 2);
+            repository.insert(assessment);
+
+            assessment = new Assessment(0, "Scheduling Application","Performance Assessment",
+                    startDate3, endDate3, 3);
             repository.insert(assessment);
 
             return true;

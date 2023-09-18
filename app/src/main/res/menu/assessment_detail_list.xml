@@ -4,6 +4,10 @@
         android:id="@+id/menu_assessment_detail_main"/>
     <item android:title="List of Assessments"
         android:id="@+id/menu_assessment_detail_assessment"/>
-    <item android:title="Alert"
-        android:id="@+id/menu_assessment_alert"/>
+    <item android:title="Set Start Date Alert"
+        android:id="@+id/menu_assessment_alert_start"/>
+    <item android:title="Set End Date Alert"
+        android:id="@+id/menu_assessment_alert_end"/>
+    <item android:title="Set Start and End Date Alert"
+        android:id="@+id/menu_assessment_alert_start_end"/>
 </menu>

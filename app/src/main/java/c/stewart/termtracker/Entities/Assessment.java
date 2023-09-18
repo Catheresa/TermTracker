@@ -16,22 +16,18 @@ public class Assessment {
     private String assessmentType;
     private String assessmentStart;
     private String assessmentEnd;
-    private String assessmentNotes;
 
     // Foreign key
     private int courseID;
 
     // Creates the instances of the assessment class which takes parameters for the various fields.
-
-
     public Assessment(int assessmentID, String assessmentName, String assessmentType,
-                      String assessmentStart, String assessmentEnd, String assessmentNotes, int courseID) {
+                      String assessmentStart, String assessmentEnd, int courseID) {
         this.assessmentID = assessmentID;
         this.assessmentName = assessmentName;
         this.assessmentType = assessmentType;
         this.assessmentStart = assessmentStart;
         this.assessmentEnd = assessmentEnd;
-        this.assessmentNotes = assessmentNotes;
         this.courseID = courseID;
     }
 
@@ -73,14 +69,6 @@ public class Assessment {
 
     public void setAssessmentEnd(String assessmentEnd) {
         this.assessmentEnd = assessmentEnd;
-    }
-
-    public String getAssessmentNotes() {
-        return assessmentNotes;
-    }
-
-    public void setAssessmentNotes(String assessmentNotes) {
-        this.assessmentNotes = assessmentNotes;
     }
 
     public int getCourseID() {

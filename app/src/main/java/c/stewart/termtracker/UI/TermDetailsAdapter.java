@@ -24,7 +24,6 @@ public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.
         mInflater= LayoutInflater.from(context);
         this.context=context;
     }
-
     // This is an inner class representing the ViewHolder for each item in the RecyclerView extending
     // RecyclerView.ViewHolder and holds references to the views within each item.
     public class TermDetailsViewHolder extends RecyclerView.ViewHolder {
@@ -60,7 +59,6 @@ public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.
             });
         }
     }
-
     // Creates instances of a ViewHolder, including setting up widgets.
     @NonNull
     @Override
@@ -68,7 +66,6 @@ public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.
         View itemView=mInflater.inflate(R.layout.term_details_list_item,parent,false);
         return new TermDetailsAdapter.TermDetailsViewHolder((itemView));
     }
-
     // This method used to bind data to a ViewHolder setting the data for each item based on the
     // position in the list. Fetches the appropriate data to display on the RecyclerView.
     @Override
@@ -84,7 +81,6 @@ public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.
             holder.termDetailsItemView2.setText("No termID");
         }
     }
-
     // Method used to obtain the size of the dataset.
     @Override
     public int getItemCount() {
@@ -92,7 +88,6 @@ public class TermDetailsAdapter extends RecyclerView.Adapter<TermDetailsAdapter.
             return mCourses.size();
         }else return 0;
     }
-
     // Sets the list of courses that will be visible in the UI of this term details view.
     public void setTerms(List<Course> courses){
         mCourses= courses;

@@ -13,9 +13,8 @@ import androidx.core.app.NotificationCompat;
 import c.stewart.termtracker.R;
 
 public class MyReceiver extends BroadcastReceiver {
-    String channel_id = "test";
+    String channel_id = "Channel";
     static int notificationID;
-
     @Override
     public void onReceive(Context context, Intent intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
@@ -25,7 +24,7 @@ public class MyReceiver extends BroadcastReceiver {
         Notification n=new NotificationCompat.Builder(context,channel_id)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentText(intent.getStringExtra("key"))
-                .setContentTitle("NotificationTest").build();
+                .setContentTitle("Notification").build();
         NotificationManager notificationManager=(NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++,n);
     }

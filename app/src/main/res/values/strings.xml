@@ -16,7 +16,9 @@
     <string name="Notes">Notes: </string>
     <string name="NotesHelpText">Enter Notes</string>
     <string name="Instructor_Phone">Phone: </string>
+    <string name="Instructor_HelpText_Phone">Enter Instructor Phone </string>
     <string name="Instructor_Email">Email: </string>
+    <string name="Instructor_Help_Email">Enter Instructor Email </string>
     <string name="InstructorHelpText">Enter Instructor Info</string>
     <string name="Save">Save</string>
     <string name="Cancel">Cancel</string>

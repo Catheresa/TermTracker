@@ -16,20 +16,21 @@
         android:contentDescription="@string/Add"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteAssessmentDetailsBTN"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="25dp"
         android:layout_marginStart="90dp"
         android:layout_marginBottom="25dp"
         android:clickable="true"
         app:srcCompat="@drawable/baseline_restore_from_trash_24"
         android:contentDescription="@string/Delete"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/addAssessmentDetailsBTN"
+        app:layout_constraintRight_toLeftOf="@+id/updateAssessmentDetailsBTN"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -39,9 +40,10 @@
         android:clickable="true"
         android:contentDescription="@string/Update"
         app:srcCompat="@drawable/baseline_save_24"
+        android:layout_marginRight="25dp"
         android:layout_marginStart="90dp"
         android:layout_marginBottom="25dp"
-        app:layout_constraintLeft_toRightOf="@+id/deleteAssessmentDetailsBTN"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <ScrollView

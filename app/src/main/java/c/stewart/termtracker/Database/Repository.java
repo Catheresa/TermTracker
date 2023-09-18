@@ -28,8 +28,7 @@ public class Repository {
     private List<Assessment> mAllAssessments;
 
     private Term thisTerm;
-
-
+    private int assessmentCount;
 
     // Threads help with responsiveness and is essential to handle potential exceptions & errors.
     private static int NUMBER_OF_THREADS=4;
@@ -43,10 +42,6 @@ public class Repository {
         mCourseDAO=db.courseDAO();
         mAssessmentDAO=db.assessmentDAO();
     }
-
-
-    // Thread.sleep: used to give the database operation time to complete before returning control to the caller.
-
     // Fetches a list of terms from the database.
     public List<Term>getmAllTerms(){
         databaseExecutor.execute(()->{
@@ -60,41 +55,7 @@ public class Repository {
         }
         return mAllTerms;
     }
-    // My original 9/6/2023
-//     Fetch a term by termID
-//    public Term getTermByID(int termID){
-//        return mTermDAO.getTermByID(termID);
-//    }
-    // Bill's code
-//    public Term getTermByID(int termID){
-//        Term thisTerm = null;
-//        databaseExecutor.execute(()->{
-//            thisTerm = mTermDAO.getTermByID(termID);
-//        });
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return thisTerm;
-//    }
-    // I got Bill's code to work with an atom reference but Bill said to delete
-//    public Term getTermByID(int termID) {
-//        AtomicReference<Term> termReference = new AtomicReference<>();
-//
-//        databaseExecutor.execute(() -> {
-//            Term term = mTermDAO.getTermByID(termID);
-//            termReference.set(term);
-//        });
-//
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        return termReference.get();
-    // Bill's second set of code.
+
     public Term getTermByID(int termID) {
         databaseExecutor.execute(()->{
             thisTerm = mTermDAO.getTermByID(termID);
@@ -106,8 +67,6 @@ public class Repository {
         }
         return thisTerm;
     }
-
-
     // Term CRUD methods:
     public void insert(Term term){
         databaseExecutor.execute(()->{
@@ -119,7 +78,6 @@ public class Repository {
             e.printStackTrace();
         }
     }
-
     public void update(Term term){
         databaseExecutor.execute(()->{
             mTermDAO.update(term);
@@ -130,7 +88,6 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
-
     public void delete(Term term){
         databaseExecutor.execute(()->{
             mTermDAO.delete(term);
@@ -141,7 +98,6 @@ public class Repository {
             throw new RuntimeException(e);
         }
     }
-
     // Fetches a list of courses from the database.
     public List<Course>getmAllCourses(){
         databaseExecutor.execute(()->{
@@ -232,7 +188,6 @@ public class Repository {
         }
         return mAllAssessments;
     }
-
     // Assessment CRUD methods:
     public void insert(Assessment assessment){
         databaseExecutor.execute(()->{
@@ -263,5 +218,16 @@ public class Repository {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+    public int getAssessmentsCountForCourse(int courseID){
+        databaseExecutor.execute(()->{
+            assessmentCount = mAssessmentDAO.getAssessmentCountForCourse(courseID);
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return assessmentCount;
     }
 }

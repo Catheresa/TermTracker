@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -56,9 +57,6 @@ public class AssessmentDetails extends AppCompatActivity {
     TextView editAssessmentEnd;
     String assessmentEndDate;
 
-    String assessmentNotes;
-    EditText editAssessmentNotes;
-
     Repository repository;
     ScrollView scrollView;
 
@@ -82,7 +80,6 @@ public class AssessmentDetails extends AppCompatActivity {
         editAssessmentName = findViewById(R.id.assessmentNameInput);
         editAssessmentStart = findViewById(R.id.assessmentStartDateInput);
         editAssessmentEnd = findViewById(R.id.assessmentEndDateInput);
-        editAssessmentNotes = findViewById(R.id.assessmentNotesInput);
         FloatingActionButton fabAdd=findViewById(R.id.addAssessmentDetailsBTN);
         FloatingActionButton fabDelete=findViewById(R.id.deleteAssessmentDetailsBTN);
         FloatingActionButton fabUpdate=findViewById(R.id.updateAssessmentDetailsBTN);
@@ -94,11 +91,9 @@ public class AssessmentDetails extends AppCompatActivity {
         assessmentType = getIntent().getStringExtra("assessmentType");
         assessmentStartDate = getIntent().getStringExtra("assessmentStart");
         assessmentEndDate = getIntent().getStringExtra("assessmentEnd");
-        assessmentNotes = getIntent().getStringExtra("assessmentNotes");
 
         // Sets the data in the appropriate input fields.
         editAssessmentName.setText(assessmentName);
-        editAssessmentNotes.setText(assessmentNotes);
 
         // Populates data in the corresponding spinners.
         Spinner courseSpinner = findViewById(R.id.assessmentCourseSpinner);
@@ -174,7 +169,6 @@ public class AssessmentDetails extends AppCompatActivity {
             public void onClick(View view) {
                 // Retrieve data from input fields.
                 assessmentName = editAssessmentName.getText().toString();
-                assessmentNotes = editAssessmentNotes.getText().toString();
                 String start = editAssessmentStart.getText().toString();
                 String end = editAssessmentEnd.getText().toString();
 
@@ -182,28 +176,38 @@ public class AssessmentDetails extends AppCompatActivity {
                     Date startDate = sdf.parse(start);
                     Date endDate = sdf.parse(end);
 
-                    start = sdf.format(startDate);
-                    end = sdf.format(endDate);
+                    if(!startDate.after(endDate)){
+                        start = sdf.format(startDate);
+                        end = sdf.format(endDate);
+
+                        Course selectedCourse = (Course) courseSpinner.getSelectedItem();
+                        courseID = selectedCourse.getCourseID();
+
+                        String selectedType = (String) assessmentTypeSpinner.getSelectedItem();
+                        assessmentType = selectedType;
+
+                        // Create a new Assessment object with the entered data.  Maximum of 5 assessments.
+                        if(repository.getAssessmentsCountForCourse(courseID) < 5){
+                            Assessment newAssessment = new Assessment(0, assessmentName,assessmentType,
+                                    start, end,courseID);
+
+                            // Insert the new Assessment into the database.
+                            repository.insert(newAssessment);
+
+                            // Return to the List of Assessments screen.
+                            Intent intent = new Intent(AssessmentDetails.this, AssessmentList.class);
+                            startActivity(intent);
+                        } else{
+                            Toast.makeText(AssessmentDetails.this, "You cannot add more than " +
+                                    "5 assessments for this course.", Toast.LENGTH_LONG).show();
+                        }
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after "+
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-                Course selectedCourse = (Course) courseSpinner.getSelectedItem();
-                courseID = selectedCourse.getCourseID();
-
-                String selectedType = (String) assessmentTypeSpinner.getSelectedItem();
-                assessmentType = selectedType;
-
-                // Create a new Assessment object with the entered data.
-                Assessment newAssessment = new Assessment(0, assessmentName,assessmentType,
-                        start, end,assessmentNotes,courseID);
-
-                // Insert the new Assessment into the database.
-                repository.insert(newAssessment);
-
-                // Return to the List of Assessments screen.
-                Intent intent = new Intent(AssessmentDetails.this, AssessmentList.class);
-                startActivity(intent);
             }
         });
 
@@ -213,7 +217,6 @@ public class AssessmentDetails extends AppCompatActivity {
             public void onClick(View view) {
                 // Retrieve updated data from input fields.
                 assessmentName = editAssessmentName.getText().toString();
-                assessmentNotes = editAssessmentNotes.getText().toString();
                 String assessmentStartDateString = editAssessmentStart.getText().toString();
                 String assessmentEndDateString = editAssessmentEnd.getText().toString();
 
@@ -221,28 +224,40 @@ public class AssessmentDetails extends AppCompatActivity {
                     Date assessmentStartDate = sdf.parse(assessmentStartDateString);
                     Date assessmentEndDate = sdf.parse(assessmentEndDateString);
 
-                    assessmentStartDateString = sdf.format(assessmentStartDate);
-                    assessmentEndDateString = sdf.format(assessmentEndDate);
+                    if(!assessmentStartDate.after(assessmentEndDate)){
+                        assessmentStartDateString = sdf.format(assessmentStartDate);
+                        assessmentEndDateString = sdf.format(assessmentEndDate);
+
+                        Course selectedCourse = (Course) courseSpinner.getSelectedItem();
+                        courseID = selectedCourse.getCourseID();
+
+                        String selectedType = (String) assessmentTypeSpinner.getSelectedItem();
+                        assessmentType = selectedType;
+
+                        // Create a new Assessment object with the entered data. Maximum of 5 assessments.
+                        if(repository.getAssessmentsCountForCourse(courseID) < 5){
+                            Assessment updatedAssessment = new Assessment(assessmentID, assessmentName,assessmentType,
+                                    assessmentStartDateString, assessmentEndDateString,courseID);
+
+                            // Insert the new Assessment into the database.
+                            repository.update(updatedAssessment);
+
+                            // Return to the List of Assessments screen.
+                            Intent intent = new Intent(AssessmentDetails.this, AssessmentList.class);
+                            startActivity(intent);
+                        } else{
+                            Toast.makeText(AssessmentDetails.this, "You cannot have more than " +
+                                    "5 assessments for the course selected.", Toast.LENGTH_LONG).show();
+                        }
+
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after "+
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
+
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-                Course selectedCourse = (Course) courseSpinner.getSelectedItem();
-                courseID = selectedCourse.getCourseID();
-
-                String selectedType = (String) assessmentTypeSpinner.getSelectedItem();
-                assessmentType = selectedType;
-
-                // Create a new Assessment object with the entered data.
-                Assessment updatedAssessment = new Assessment(assessmentID, assessmentName,assessmentType,
-                        assessmentStartDateString, assessmentEndDateString,assessmentNotes,courseID);
-
-                // Insert the new Assessment into the database.
-                repository.update(updatedAssessment);
-
-                // Return to the List of Assessments screen.
-                Intent intent = new Intent(AssessmentDetails.this, AssessmentList.class);
-                startActivity(intent);
             }
         });
 
@@ -258,7 +273,7 @@ public class AssessmentDetails extends AppCompatActivity {
                 int courseID = getIntent().getIntExtra("courseID", -1);
 
                 Assessment assessmentToDelete = new Assessment(assessmentID, " ",
-                        " ", " "," ", "", courseID);
+                        " ", " "," ", courseID);
                 repository.delete(assessmentToDelete);
                 // Closes activity after deletion.
                 finish();
@@ -288,6 +303,10 @@ public class AssessmentDetails extends AppCompatActivity {
         }
     }
 
+    private String today(){
+        return sdf.format(new Date());
+    }
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -315,23 +334,103 @@ public class AssessmentDetails extends AppCompatActivity {
             startActivity(intent);
             return true;
         }
-        if(item.getItemId()==R.id.menu_assessment_alert){
-            String dataFromScreen = editAssessmentStart.getText().toString();
+        if(item.getItemId()==R.id.menu_assessment_alert_start){
+            String startDateFromScreen = editAssessmentStart.getText().toString();
             Date myDate1 = null;
-            try{
-                myDate1 = sdf.parse(dataFromScreen);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            if (startDateFromScreen.equals(today())) {
+                try{
+                    myDate1 = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Assessment ID: " + assessmentID + " " + assessmentName + "  starts today");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
+                        ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
+                return true;
             }
-            Long trigger = myDate1.getTime();
-            Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
-            intent.putExtra("key", "Assessment starts today");
-            PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
-                    ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, trigger, sender);
-            return true;
         }
+        if(item.getItemId()==R.id.menu_assessment_alert_end){
+            String endDateFromScreen = editAssessmentEnd.getText().toString();
+            Date myDate2 = null;
+
+            if (endDateFromScreen.equals(today())) {
+                try{
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Assessment ID: " + assessmentID + " " + assessmentName + " ends today");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
+                        ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if(item.getItemId()==R.id.menu_assessment_alert_start_end){
+            String startDateFromScreen = editAssessmentStart.getText().toString();
+            String endDateFromScreen = editAssessmentEnd.getText().toString();
+            Date myDate1 = null;
+            Date myDate2 = null;
+
+            if(startDateFromScreen.equals(today()) && endDateFromScreen.equals(today())){
+                try{
+                    myDate1 = sdf.parse(startDateFromScreen);
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Assessment ID: "+ assessmentID + assessmentName + " starts & ends today");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
+                        ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                return true;
+            } else if (startDateFromScreen.equals(today())) {
+                try{
+                    myDate1 = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Assessment ID: " + assessmentID + " " + assessmentName + "  starts today");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
+                        ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger, sender);
+                return true;
+            } else if (endDateFromScreen.equals(today())) {
+                try{
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(AssessmentDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Assessment ID: " + assessmentID + " " + assessmentName + "  ends today");
+                PendingIntent sender = PendingIntent.getBroadcast(AssessmentDetails.this,
+                        ++MainActivity.numAlert, intent, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, endTrigger, sender);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         if(item.getItemId()==android.R.id.home){
             this.finish();
             return true;

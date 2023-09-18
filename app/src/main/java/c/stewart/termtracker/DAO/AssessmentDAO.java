@@ -34,4 +34,7 @@ public interface AssessmentDAO {
     @Query("SELECT * FROM Assessments WHERE courseID=:courseID ORDER BY courseID ASC")
     List<Assessment> getAssociatedAssessments(int courseID);
 
+    @Query("SELECT COUNT(*) FROM Assessments WHERE courseID=:courseID")
+    int getAssessmentCountForCourse(int courseID);
+
 }

@@ -207,34 +207,40 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                     Date startDate = sdf.parse(start);
                     Date endDate = sdf.parse(end);
 
-                    start = sdf.format(startDate);
-                    end = sdf.format(endDate);
+                    if(!startDate.after(endDate)){
+                        start = sdf.format(startDate);
+                        end = sdf.format(endDate);
+
+                        // Retrieve data from input fields.
+                        courseTitle = editCourseTitle.getText().toString();
+                        courseInstructor = editCourseInstructor.getText().toString();
+                        courseInstructorPhone = editCourseInstructorPhone.getText().toString();
+                        courseInstructorEmail = editCourseInstructorEmail.getText().toString();
+                        courseNotes = editCourseNotes.getText().toString();
+                        Term selectedTerm = (Term) termSpinner.getSelectedItem();
+                        termID = selectedTerm.getTermID();
+
+                        String selectedStatusString = (String ) courseStatusSpinner.getSelectedItem();
+                        courseStatus = selectedStatusString;
+
+                        // Create a new Course object with the entered data.
+                        Course newCourse = new Course(0, courseTitle, start, end, courseStatus,
+                                courseInstructor, courseInstructorPhone, courseInstructorEmail, courseNotes,
+                                termID);
+
+                        // Insert the new Course into the database.
+                        repository.insert(newCourse);
+
+                        // Return to the List of Courses screen.
+                        Intent intent = new Intent(CourseDetails.this, CourseList.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after "+
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-                // Retrieve data from input fields.
-                courseTitle = editCourseTitle.getText().toString();
-                courseInstructor = editCourseInstructor.getText().toString();
-                courseInstructorPhone = editCourseInstructorPhone.getText().toString();
-                courseInstructorEmail = editCourseInstructorEmail.getText().toString();
-                courseNotes = editCourseNotes.getText().toString();
-                Term selectedTerm = (Term) termSpinner.getSelectedItem();
-                termID = selectedTerm.getTermID();
-
-                String selectedStatusString = (String ) courseStatusSpinner.getSelectedItem();
-                courseStatus = selectedStatusString;
-
-                // Create a new Course object with the entered data.
-                Course newCourse = new Course(0, courseTitle, start, end, courseStatus,
-                        courseInstructor, courseInstructorPhone, courseInstructorEmail, courseNotes,
-                        termID);
-
-                // Insert the new Course into the database.
-                repository.insert(newCourse);
-
-                // Return to the List of Courses screen.
-                Intent intent = new Intent(CourseDetails.this, CourseList.class);
-                startActivity(intent);
             }
         });
         // Update the selected object when fab is clicked.
@@ -250,31 +256,36 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
                     Date courseStartDate = sdf.parse(courseStartDateString);
                     Date courseEndDate = sdf.parse(courseEndDateString);
 
-                    courseStartDateString = sdf.format(courseStartDate);
-                    courseEndDateString = sdf.format(courseEndDate);
+                    if(!courseStartDate.after(courseEndDate)){
+                        courseStartDateString = sdf.format(courseStartDate);
+                        courseEndDateString = sdf.format(courseEndDate);
+
+                        courseInstructor = editCourseInstructor.getText().toString();
+                        courseInstructorPhone = editCourseInstructorPhone.getText().toString();
+                        courseInstructorEmail = editCourseInstructorEmail.getText().toString();
+                        courseNotes = editCourseNotes.getText().toString();
+                        Term selectedTerm = (Term) termSpinner.getSelectedItem();
+                        termID = selectedTerm.getTermID();
+                        String selectedStatus = (String) courseStatusSpinner.getSelectedItem();
+
+                        // Create a new Course object with the updated data
+                        Course updatedCourse = new Course(courseID, courseTitle, courseStartDateString,
+                                courseEndDateString, selectedStatus, courseInstructor,
+                                courseInstructorPhone, courseInstructorEmail, courseNotes, termID);
+
+                        // Update the Course in the database.
+                        repository.update(updatedCourse);
+
+                        // Return to the List of Courses screen
+                        Intent intent = new Intent(CourseDetails.this, CourseList.class);
+                        startActivity(intent);
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after "+
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-                courseInstructor = editCourseInstructor.getText().toString();
-                courseInstructorPhone = editCourseInstructorPhone.getText().toString();
-                courseInstructorEmail = editCourseInstructorEmail.getText().toString();
-                courseNotes = editCourseNotes.getText().toString();
-                Term selectedTerm = (Term) termSpinner.getSelectedItem();
-                termID = selectedTerm.getTermID();
-                String selectedStatus = (String) courseStatusSpinner.getSelectedItem();
-
-                // Create a new Course object with the updated data
-                Course updatedCourse = new Course(courseID, courseTitle, courseStartDateString,
-                        courseEndDateString, selectedStatus, courseInstructor,
-                        courseInstructorPhone, courseInstructorEmail, courseNotes, termID);
-
-                // Update the Course in the database.
-                repository.update(updatedCourse);
-
-                // Return to the List of Courses screen
-                Intent intent = new Intent(CourseDetails.this, CourseList.class);
-                startActivity(intent);
             }
         });
 
@@ -346,6 +357,9 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             fabAdd.setVisibility(View.GONE);
         }
     }
+    private String today(){
+        return sdf.format(new Date());
+    }
     // Refreshes the list of assessments with any changes to the database.
     @Override
     protected void onResume() {
@@ -387,27 +401,103 @@ public class CourseDetails extends AppCompatActivity implements AdapterView.OnIt
             startActivity(intent);
             return true;
         }
-        if(item.getItemId()==R.id.menu_course_alert){
-            String dateFromScreen = editCourseStart.getText().toString();
+        if(item.getItemId()==R.id.menu_course_alert_start){
+            String startDateFromScreen = editCourseStart.getText().toString();
             Date myDate1 = null;
-            try {
-                myDate1 = sdf.parse(dateFromScreen);
-            } catch (ParseException e) {
-                e.printStackTrace();
+
+            if(startDateFromScreen.equals(today())){
+                try {
+                    myDate1 = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Course ID: " + courseID + " " + courseTitle + " starts today.");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger,sender);
+                return true;
             }
-            Long trigger = myDate1.getTime();
-            Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
-            intent.putExtra("key", "message I want to see");
-            PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.set(AlarmManager.RTC_WAKEUP, trigger,sender);
-            return true;
+        }
+        if(item.getItemId()==R.id.menu_course_alert_end){
+            String endDateFromScreen = editCourseEnd.getText().toString();
+            Date myDate2 = null;
+
+            if(endDateFromScreen.equals(today())){
+                try {
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Course ID: " + courseID + " " + courseTitle + " ends today.");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,endTrigger,sender);
+                return true;
+            } else{
+                return false;
+            }
+        }
+        if(item.getItemId()==R.id.menu_course_alert_start_end){
+            String startDateFromScreen = editCourseStart.getText().toString();
+            String endDateFromScreen = editCourseEnd.getText().toString();
+            Date myDate1 = null;
+            Date myDate2 = null;
+
+            if(startDateFromScreen.equals(today()) && endDateFromScreen.equals(today())){
+                try {
+                    myDate1 = sdf.parse(startDateFromScreen);
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Course ID: " + courseID + " " + courseTitle + " starts & ends today.");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger,sender);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,endTrigger,sender);
+                return true;
+            } else if(startDateFromScreen.equals(today())){
+                try {
+                    myDate1 = sdf.parse(startDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long startTrigger = myDate1.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Course ID: " + courseID + " " + courseTitle + " starts today.");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP, startTrigger,sender);
+                return true;
+            } else if(endDateFromScreen.equals(today())){
+                try {
+                    myDate2 = sdf.parse(endDateFromScreen);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long endTrigger = myDate2.getTime();
+                Intent intent = new Intent(CourseDetails.this, MyReceiver.class);
+                intent.putExtra("key", "Course ID: " + courseID + " " + courseTitle + " ends today.");
+                PendingIntent sender=PendingIntent.getBroadcast(CourseDetails.this,++MainActivity.numAlert, intent,PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                alarmManager.set(AlarmManager.RTC_WAKEUP,endTrigger,sender);
+                return true;
+            } else{
+                return false;
+            }
         }
         if(item.getItemId()==R.id.menu_course_share_note){
             Intent sentIntent= new Intent();
             sentIntent.setAction(Intent.ACTION_SEND);
-            sentIntent.putExtra(Intent.EXTRA_TEXT, editCourseNotes.getText().toString()+ " SHARE_SUCCESS");
-            sentIntent.putExtra(Intent.EXTRA_TITLE, editCourseNotes.getText().toString()+ " SHARE_SUCCESS");
+            sentIntent.putExtra(Intent.EXTRA_TEXT, editCourseNotes.getText().toString()+ " " + courseID + " " + courseTitle);
+            sentIntent.putExtra(Intent.EXTRA_TITLE, editCourseNotes.getText().toString()+ " " + courseID + " " + courseTitle);
             sentIntent.setType("text/plain");
             Intent shareIntent=Intent.createChooser(sentIntent,null);
             startActivity(shareIntent);

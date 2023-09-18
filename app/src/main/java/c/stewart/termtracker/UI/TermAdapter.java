@@ -53,7 +53,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             });
         }
     }
-
     // Creates instances of a ViewHolder, including setting up widgets.
     @NonNull
     @Override
@@ -61,7 +60,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
         View itemView=mInflater.inflate(R.layout.term_list_item,parent,false);
         return new TermViewHolder((itemView));
     }
-
     // Fetches the appropriate data to display on the RecyclerView.
     @Override
     public void onBindViewHolder(@NonNull TermAdapter.TermViewHolder holder, int position) {
@@ -73,7 +71,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             holder.termItemView.setText("No term name");
         }
     }
-
     // Method used to obtain the size of the dataset.
     @Override
     public int getItemCount() {
@@ -81,7 +78,6 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
             return mTerms.size();
         }else return 0;
     }
-
     // Sets the list of terms that will be visible in the UI.
     public void setTerms(List<Term> terms){
         mTerms=terms;

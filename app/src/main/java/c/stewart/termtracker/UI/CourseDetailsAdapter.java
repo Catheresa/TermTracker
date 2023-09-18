@@ -56,7 +56,6 @@ public class CourseDetailsAdapter extends RecyclerView.Adapter<CourseDetailsAdap
                     intent.putExtra("assessmentType", current.getAssessmentType());
                     intent.putExtra("assessmentStart", current.getAssessmentStart());
                     intent.putExtra("assessmentEnd", current.getAssessmentEnd());
-                    intent.putExtra("assessmentNotes", current.getAssessmentNotes());
                     intent.putExtra("courseID", current.getCourseID());
                     context.startActivity(intent);
                 }

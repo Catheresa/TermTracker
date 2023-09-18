@@ -112,7 +112,6 @@ public class TermDetails extends AppCompatActivity {
                 editTermStart.setText(sdf.format(myCalendarStart.getTime()));
             }
         };
-
         editTermEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,7 +127,6 @@ public class TermDetails extends AppCompatActivity {
                         myCalendarEnd.get(Calendar.MONTH), myCalendarEnd.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
-
         termEnd =  new DatePickerDialog.OnDateSetListener(){
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
@@ -139,11 +137,10 @@ public class TermDetails extends AppCompatActivity {
                 editTermEnd.setText(sdf.format(myCalendarEnd.getTime()));
             }
         };
-
         // Add item to the Room Database.
         fabAdd.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 String myFormat = "MM/dd/yy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -154,27 +151,30 @@ public class TermDetails extends AppCompatActivity {
                     Date startDate = sdf.parse(start);
                     Date endDate = sdf.parse(end);
 
-                    start = sdf.format(startDate);
-                    end = sdf.format(endDate);
+                    if (!startDate.after(endDate)) {
+                        start = sdf.format(startDate);
+                        end = sdf.format(endDate);
+                        //Retrieve data from input fields
+                        termName = editTermName.getText().toString();
+
+                        //Create a new Term object with the entered data
+                        Term newTerm = new Term(0, termName, start, end);
+
+                        // Insert the new Term into the database
+                        repository.insert(newTerm);
+
+                        // Return to the List of Terms screen
+                        Intent intent = new Intent(TermDetails.this, TermList.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after " +
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-                //Retrieve data from input fields
-                termName = editTermName.getText().toString();
-
-                //Create a new Term object with the entered data
-                Term newTerm = new Term(0, termName, start, end);
-
-                // Insert the new Term into the database
-                repository.insert(newTerm);
-
-                // Return to the List of Terms screen
-                Intent intent = new Intent(TermDetails.this, TermList.class);
-                startActivity(intent);
-                }
+            }
         });
-
         // Update item in the Room Database.
         //THIS IS THE EVENT HANDLER FOR THE SAVE TERM BUTTON
         fabUpdate.setOnClickListener(new View.OnClickListener() {
@@ -189,24 +189,28 @@ public class TermDetails extends AppCompatActivity {
                     Date termStartDate = sdf.parse(termStartDateString);
                     Date termEndDate = sdf.parse(termEndDateString);
 
-                    termStartDateString = sdf.format(termStartDate);
-                    termEndDateString = sdf.format(termEndDate);
+                    if(!termStartDate.after(termEndDate)){
+                        termStartDateString = sdf.format(termStartDate);
+                        termEndDateString = sdf.format(termEndDate);
+
+                        // Create a new Term object with the updated data
+                        Term updatedTerm = new Term(termID, termName, termStartDateString, termEndDateString);
+
+                        // Update the Term in the database.
+                        repository.update(updatedTerm);
+
+                        // Return to the List of Terms screen
+                        Intent intent = new Intent(TermDetails.this, TermList.class);
+                        startActivity(intent);
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Start date cannot be after " +
+                                "end date.", Toast.LENGTH_LONG).show();
+                    }
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-
-                // Create a new Term object with the updated data
-                Term updatedTerm = new Term(termID, termName, termStartDateString, termEndDateString);
-
-                // Update the Term in the database.
-                repository.update(updatedTerm);
-
-                // Return to the List of Terms screen
-                Intent intent = new Intent(TermDetails.this, TermList.class);
-                startActivity(intent);
             }
         });
-
         // Remove item from the Room Database.
         fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,7 +238,6 @@ public class TermDetails extends AppCompatActivity {
                 }
             }
         });
-
         // Visibility of the floating action buttons will be dependent upon action taken.
         if (termID == -1) {
             // User is in add mode, hide the deleteTermDetailsBTN
@@ -257,7 +260,6 @@ public class TermDetails extends AppCompatActivity {
             fabAdd = findViewById(R.id.addTermDetailsBTN);
             fabAdd.setVisibility(View.GONE);
         }
-
         // Assigns the view where the list will populate.
         RecyclerView recyclerView = findViewById(R.id.term_course_recycler_view);
         repository = new Repository(getApplication());
@@ -272,9 +274,7 @@ public class TermDetails extends AppCompatActivity {
         }else{
             recyclerView.setAdapter(null);
         }
-
     }
-
     // Refreshes the list of courses with any changes to the database.
     @Override
     protected void onResume() {
@@ -296,7 +296,6 @@ public class TermDetails extends AppCompatActivity {
         editTermStart.setText(termStartDate);
         editTermEnd.setText(termEndDate);
     }
-
     // Makes menu show up.
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
